@@ -6,6 +6,17 @@ import ttk
 root = tk.Tk()
 root.title("python")
 
+# add tabs
+tablecontrol = ttk.Notebook(root)
+
+tab1 = ttk.Frame(tablecontrol)
+tablecontrol.add(tab1,text="tab1")
+#tab2 = tk.Frame(tablecontrol)
+#tablecontrol.add(tab2,text="tab2")
+
+tablecontrol.pack(expand=1,fill="both")
+
+
 # top level labelframs
 toplevel = ttk.Labelframe(root,text="Top-Level")
 toplevel.grid(column=5,row=5)
@@ -85,10 +96,12 @@ menubar = tk.Menu(root)
 root.config(menu=menubar)
 
 filemenu = tk.Menu(menubar,tearoff=0)
+
 filemenu.add_command(label="Open")
 filemenu.add_command(label="Call Button",command=click_button)
 filemenu.add_separator()
 filemenu.add_command(label="Exit",command=root.quit)
+
 menubar.add_cascade(label="Setting",menu=filemenu)
 
 def aboutmessage():
@@ -97,5 +110,15 @@ def aboutmessage():
 helpmenu = tk.Menu(menubar)
 helpmenu.add_command(label="About",command=aboutmessage)
 menubar.add_cascade(label="Help",menu=helpmenu)
+
+# add tabs
+tablecontrol = ttk.Notebook(root)
+
+tab1 = ttk.Frame(tablecontrol)
+tablecontrol.add(tab1,text="tab1")
+#tab2 = tk.Frame(tablecontrol)
+#tablecontrol.add(tab2,text="tab2")
+
+tablecontrol.grid(column=0,row=0)
 
 root.mainloop()
