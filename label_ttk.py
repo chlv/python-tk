@@ -1,25 +1,30 @@
 #      -- coding:utf-8 --
 
-import Tkinter as tk
-import ttk
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
 
 root = tk.Tk()
 root.title("python")
+root.iconbitmap(r'C:\Python34\DLLs\pyc.ico')
+#root.withdraw()
 
+# independence message box
+tk.messagebox.showinfo("","This ia an independence message box")
 # add tabs
 tablecontrol = ttk.Notebook(root)
 
 tab1 = ttk.Frame(tablecontrol)
 tablecontrol.add(tab1,text="tab1")
-#tab2 = tk.Frame(tablecontrol)
-#tablecontrol.add(tab2,text="tab2")
+tab2 = tk.Frame(tablecontrol)
+tablecontrol.add(tab2,text="tab2")
 
-tablecontrol.pack(expand=1,fill="both")
+tablecontrol.grid(column=0,row=0,stick=tk.W)
 
 
 # top level labelframs
-toplevel = ttk.Labelframe(root,text="Top-Level")
-toplevel.grid(column=5,row=5)
+toplevel = ttk.Labelframe(tab1,text="Top-Level")
+toplevel.grid(column=0,row=1)
 # label enter you name
 label1 = ttk.Label(toplevel,text="Please Enter Your Name:")
 label1.grid(column=0,row=0,stick=tk.W)
@@ -92,33 +97,41 @@ ttk.Label(labelsframe,text="First").grid(column=0,row=0,stick=tk.W)
 ttk.Label(labelsframe,text="Second").grid(column=0,row=1,stick=tk.W)
 ttk.Label(labelsframe,text="Third").grid(column=0,row=2,stick=tk.W)
 
+def choose__message():
+	answer = tk.messagebox.askyesno("Python choose message","Do you real want to open a file")
+	print(answer)
+
 menubar = tk.Menu(root)
 root.config(menu=menubar)
 
 filemenu = tk.Menu(menubar,tearoff=0)
 
-filemenu.add_command(label="Open")
+filemenu.add_command(label="Open",command=choose__message)
 filemenu.add_command(label="Call Button",command=click_button)
 filemenu.add_separator()
 filemenu.add_command(label="Exit",command=root.quit)
 
 menubar.add_cascade(label="Setting",menu=filemenu)
 
+
+
+# define message box
 def aboutmessage():
-	tk.Label(toplevel,text="Author:LC\n2017-05-11").grid(column=0,row=8,stick=tk.W)
+#	tk.messagebox.showinfo("Python Info Message Box","Author:LC  2017-05-11")
+#	tk.messagebox.showwarning("Python Warning Message Box","You need to add comment")
+	tk.messagebox.showerror("Python Error Message Box","You'd better use python3.\nPython 2 not add messagebox package ")
 
 helpmenu = tk.Menu(menubar)
 helpmenu.add_command(label="About",command=aboutmessage)
 menubar.add_cascade(label="Help",menu=helpmenu)
 
-# add tabs
-tablecontrol = ttk.Notebook(root)
 
-tab1 = ttk.Frame(tablecontrol)
-tablecontrol.add(tab1,text="tab1")
-#tab2 = tk.Frame(tablecontrol)
-#tablecontrol.add(tab2,text="tab2")
+# add tab2 toplevel
+topleveltab2 = ttk.Labelframe(tab2,text="toplevel TAB2")
+topleveltab2.grid(column=0,row=0)
+tab2label1 = ttk.Label(topleveltab2,text="this is tab2")
+tab2label1.grid(column=0,row=0,stick=tk.W)
 
-tablecontrol.grid(column=0,row=0)
+
 
 root.mainloop()
