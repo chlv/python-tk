@@ -3,11 +3,12 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import scrolledtext
 
 root = tk.Tk()
 root.title("python")
-root.iconbitmap(r'C:\Python34\DLLs\pyc.ico')
-#root.withdraw()
+# root.iconbitmap(r'C:\Python34\DLLs\pyc.ico')
+# root.withdraw()
 
 # independence message box
 tk.messagebox.showinfo("","This ia an independence message box")
@@ -50,7 +51,7 @@ enternumber["value"]=(1,2,3,4)
 enternumber.grid(column=1,row=3,stick=tk.W)
 enternumber.current(0)
 
-#checkbox
+# checkbox
 cb1disable = tk.IntVar()
 checkbutton1 = ttk.Checkbutton(toplevel,text="Disable",variable=cb1disable)
 checkbutton1.grid(column=0,row=4,stick=tk.W)
@@ -132,6 +133,17 @@ topleveltab2.grid(column=0,row=0)
 tab2label1 = ttk.Label(topleveltab2,text="this is tab2")
 tab2label1.grid(column=0,row=0,stick=tk.W)
 
+# add scroll text
+scrolW = 30
+scrolH = 3
+scr = tk.scrolledtext.ScrolledText(topleveltab2,width=scrolW,height=scrolH,wrap=tk.WORD)
+scr.grid(column=0,columnspan=100)
 
-
+def _spin():
+	value = spin.get()
+	print(value)
+	scr.insert(tk.INSERT,value + "\n")
+# add spin box
+spin = tk.Spinbox(topleveltab2,from_=10,to=20,width=5,bd=6,command=_spin)
+spin.grid(column=0,row=4)
 root.mainloop()
