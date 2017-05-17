@@ -4,6 +4,9 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import scrolledtext
+import time
+from threading import Thread
+
 
 root = tk.Tk()
 root.title("python")
@@ -134,16 +137,27 @@ tab2label1 = ttk.Label(topleveltab2,text="this is tab2")
 tab2label1.grid(column=0,row=0,stick=tk.W)
 
 # add scroll text
-scrolW = 30
-scrolH = 3
+scrolW = 40
+scrolH = 10
 scr = tk.scrolledtext.ScrolledText(topleveltab2,width=scrolW,height=scrolH,wrap=tk.WORD)
 scr.grid(column=0,columnspan=100)
 
+def multithread():
+	thread1 = Thread(target=_spin)
+	thread1.setDaemon(True)
+	thread1.start()
+	print(thread1)
+
 def _spin():
-	value = spin.get()
-	print(value)
-	scr.insert(tk.INSERT,value + "\n")
+#	value = spin.get()
+#	print(value)
+	for i in range(10):
+		time.sleep(5)
+		scr.insert(tk.INSERT,str(i) + "\n")
 # add spin box
-spin = tk.Spinbox(topleveltab2,from_=10,to=20,width=5,bd=6,command=_spin)
+spin = tk.Spinbox(topleveltab2,from_=10,to=20,width=5,bd=6,command=multithread)
 spin.grid(column=0,row=4)
+
+
+
 root.mainloop()
