@@ -6,6 +6,8 @@ from tkinter import messagebox
 from tkinter import scrolledtext
 import time
 from threading import Thread
+from queue import  Queue
+import customerQueue
 
 
 root = tk.Tk()
@@ -40,6 +42,24 @@ entername.focus()
 # button and action
 def click_button():
 	action.configure(text="Your Name is: "+name.get()+"\nChoose number is: "+number.get())
+	threadusequeue()
+#	customerQueue.writetoscreen()
+
+def usequeue():
+	queue = Queue()
+	count = 0
+	for i in range(6):
+		count += 1
+		queue.put("Message from Queue:" + str(i) )
+	while count >= 0:
+		print(queue.get())
+		count -= 1
+
+def threadusequeue():
+	tusequeue = Thread(target=usequeue)
+	tusequeue.setDaemon(True)
+	tusequeue.start()
+
 action = ttk.Button(toplevel,text="Click Me",command=click_button)
 action.grid(column=1,row=1,stick=tk.W)
 #action.configure(state="disable")
