@@ -60,10 +60,24 @@ class GUI():
 		tab2frame = ttk.Labelframe(tab2,text="Tab2-toplevel-Frame")
 		tab2frame.grid(column=0,row=0)
 
-		label1 = ttk.Label(tab1frame,text="Please Enter your name:")
-		label1.grid(column=0,row=0)
-		label2 = ttk.Label(tab2frame,text="Please input a number:")
-		label2.grid(column=0,row=0)
+		tab1label1 = ttk.Label(tab1frame,text="Please Enter your name:")
+		tab1label1.grid(column=0,row=0)
+		tab2label2 = ttk.Label(tab2frame,text="Please input a number:")
+		tab2label2.grid(column=0,row=0)
+
+		#create entry
+		tab1entryinput = tk.StringVar()
+		tab1entry = ttk.Entry(tab1frame,textvariable=tab1entryinput)
+		tab1entry.grid(column=1,row=0)
+		tab1entry.focus()
+
+		#create checkbutton
+		tab1cb1var = tk.IntVar()
+		tab1cb2var = tk.IntVar()
+
+		tab1cb1 = ttk.Checkbutton(tab1frame,text="Name",variabel=tab1cb1var)
+
+
 
 gui = GUI()
 gui.root.mainloop()
