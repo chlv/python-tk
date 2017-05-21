@@ -29,8 +29,33 @@ class GUI():
 		tk.messagebox.showinfo("GUI Info","Author:Lv Chao\n2017-05-19")
 
 	def	buttonaction(self):
-		print(self.tab1cb1var.get())
-		print(self.tab1entry)
+		self.scroll.insert(tk.INSERT,str(self.tab1cb1var.get())+"\n")
+		self.scroll.insert(tk.INSERT,str(self.tab1entry.get())+"\n")
+		if self.tab1cb2var.get() == 1:
+			self.scroll.insert(tk.INSERT,str(time.asctime(time.localtime(time.time())))+"\n")
+		else:
+			self.scroll.insert(tk.INSERT,"Time is not selected"+"\n")
+
+	def sleeptime(self):
+		time.sleep(10)
+
+	def multithread(self):
+		self.mthread = Thread(target=self.sleeptime())
+		self.mthread.setDaemon(True)
+		self.mthread.start()
+
+
+	def radiofun(self):
+		self.radionumber = self.radiovar.get()
+		if self.radionumber == 1:
+			self.multithread()
+			print(10,self.mthread)
+		elif self.radionumber == 2:
+			self.multithread()
+			print(20,self.mthread)
+		else:
+			self.multithread()
+			print(30,self.mthread)
 
 	def createwidgets(self):
 		# create menu
@@ -64,28 +89,44 @@ class GUI():
 		tab2frame.grid(column=0,row=0)
 
 		tab1label1 = ttk.Label(tab1frame,text="Please Enter your name:")
-		tab1label1.grid(column=0,row=0)
-		tab2label2 = ttk.Label(tab2frame,text="Please input a number:")
-		tab2label2.grid(column=0,row=0)
+		tab1label1.grid(column=0,row=0,stick=tk.W)
+		tab2label2 = ttk.Label(tab2frame,text="Please Select a Number:")
+		tab2label2.grid(column=0,row=0,stick=tk.W)
 
 		#create entry
 		self.tab1entryinput = tk.StringVar()
 		self.tab1entry = ttk.Entry(tab1frame,textvariable=self.tab1entryinput)
-		self.tab1entry.grid(column=1,row=0)
+		self.tab1entry.grid(column=1,row=0,stick=tk.W)
 		self.tab1entry.focus()
 
 		#create checkbutton
 		self.tab1cb1var = tk.IntVar()
 		self.tab1cb2var = tk.IntVar()
 
-		tab1cb1 = ttk.Checkbutton(tab1frame,text="Name",offvalue=20,onvalue=10,variable=self.tab1cb1var,state="disabled")
-		tab1cb2 = ttk.Checkbutton(tab1frame,text="Time",variable=self.tab1cb2var)
-		tab1cb1.grid(column=0,row=1)
-		tab1cb2.grid(column=1,row=1)
-		tab1cb1.select()
+		self.tab1cb1 = ttk.Checkbutton(tab1frame,text="Name",variable=self.tab1cb1var,state="disabled")
+		self.tab1cb2 = ttk.Checkbutton(tab1frame,text="Time",variable=self.tab1cb2var)
+		self.tab1cb1.grid(column=0,row=1,stick=tk.W)
+		self.tab1cb2.grid(column=0,row=2,stick=tk.W)
+		self.tab1cb1var.set(1)
+
 		#create button
 		tab1button = ttk.Button(tab1frame,text="Run",command=self.buttonaction)
-		tab1button.grid(column=1,row=2)
+		tab1button.grid(column=1,row=2,stick=tk.W)
+
+		#create scrolltext
+		scrolW = 50
+		scrolH = 8
+		self.scroll = scrolledtext.ScrolledText(tab1frame,width=scrolW,height=scrolH,wrap=tk.WORD)
+		self.scroll.grid(column=0,columnspan=3,stick=tk.W)
+
+		#create radiobutton
+		self.radiovar = tk.IntVar()
+		for i in range(1,4):
+			self.radiobutton = ttk.Radiobutton(tab2frame,text=i,variable=self.radiovar,value=i,command=self.radiofun)
+			self.radiobutton.grid(column=0,row=i,stick=tk.W)
+
+
+
 
 
 
