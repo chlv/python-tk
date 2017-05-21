@@ -28,6 +28,9 @@ class GUI():
 	def aboutinfo(self):
 		tk.messagebox.showinfo("GUI Info","Author:Lv Chao\n2017-05-19")
 
+	def	buttonaction(self):
+		print(self.tab1cb1var.get())
+		print(self.tab1entry)
 
 	def createwidgets(self):
 		# create menu
@@ -66,16 +69,24 @@ class GUI():
 		tab2label2.grid(column=0,row=0)
 
 		#create entry
-		tab1entryinput = tk.StringVar()
-		tab1entry = ttk.Entry(tab1frame,textvariable=tab1entryinput)
-		tab1entry.grid(column=1,row=0)
-		tab1entry.focus()
+		self.tab1entryinput = tk.StringVar()
+		self.tab1entry = ttk.Entry(tab1frame,textvariable=self.tab1entryinput)
+		self.tab1entry.grid(column=1,row=0)
+		self.tab1entry.focus()
 
 		#create checkbutton
-		tab1cb1var = tk.IntVar()
-		tab1cb2var = tk.IntVar()
+		self.tab1cb1var = tk.IntVar()
+		self.tab1cb2var = tk.IntVar()
 
-		tab1cb1 = ttk.Checkbutton(tab1frame,text="Name",variabel=tab1cb1var)
+		tab1cb1 = ttk.Checkbutton(tab1frame,text="Name",offvalue=20,onvalue=10,variable=self.tab1cb1var,state="disabled")
+		tab1cb2 = ttk.Checkbutton(tab1frame,text="Time",variable=self.tab1cb2var)
+		tab1cb1.grid(column=0,row=1)
+		tab1cb2.grid(column=1,row=1)
+		tab1cb1.select()
+		#create button
+		tab1button = ttk.Button(tab1frame,text="Run",command=self.buttonaction)
+		tab1button.grid(column=1,row=2)
+
 
 
 
