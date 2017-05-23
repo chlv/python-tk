@@ -7,6 +7,8 @@ from threading import Thread
 from queue import Queue
 from tkinter import messagebox
 from tkinter import scrolledtext
+from tkinter import filedialog
+from os import path
 
 
 class GUI():
@@ -37,10 +39,12 @@ class GUI():
 			self.scroll.insert(tk.INSERT,"Time is not selected"+"\n")
 
 	def sleeptime(self):
-		time.sleep(10)
+		for i in range(6):
+			time.sleep(10)
+			print(str(i))
 
 	def multithread(self):
-		self.mthread = Thread(target=self.sleeptime())
+		self.mthread = Thread(target=self.sleeptime)    # targe = refer  not a real function
 		self.mthread.setDaemon(True)
 		self.mthread.start()
 
@@ -56,6 +60,22 @@ class GUI():
 		else:
 			self.multithread()
 			print(30,self.mthread)
+
+
+	def spinaction(self):
+		print(self.spin.get())
+
+	def showaction(self):
+		self.tab2scr.insert(tk.INSERT,"Combo box current variable:"+str(self.combox.get())+"\n")
+		self.tab2scr.insert(tk.INSERT,"Spin box current variable:"+str(self.spin.get())+"\n")
+
+	def broweraction(self):
+		self.tab2scr.insert(tk.INSERT,"Open File Location:\n")
+		self.fl = path.dirname(__file__)
+		self.filelocvar = filedialog.askopenfilename(parent=self.root,initialdir=self.fl)
+		self.tab2scr.insert(tk.INSERT,self.filelocvar+"\n")
+		self.fileloc.delete(0,tk.END)
+		self.fileloc.insert(0,self.filelocvar)
 
 	def createwidgets(self):
 		# create menu
@@ -88,10 +108,13 @@ class GUI():
 		tab2frame = ttk.Labelframe(tab2,text="Tab2-toplevel-Frame")
 		tab2frame.grid(column=0,row=0)
 
+		#	create label
 		tab1label1 = ttk.Label(tab1frame,text="Please Enter your name:")
 		tab1label1.grid(column=0,row=0,stick=tk.W)
 		tab2label2 = ttk.Label(tab2frame,text="Please Select a Number:")
 		tab2label2.grid(column=0,row=0,stick=tk.W)
+		tab2labelcomment = ttk.Label(tab2frame,text="#Use sleep and MultiThread#")
+		tab2labelcomment.grid(column=1,row=0,stick=tk.W)
 
 		#create entry
 		self.tab1entryinput = tk.StringVar()
@@ -125,7 +148,39 @@ class GUI():
 			self.radiobutton = ttk.Radiobutton(tab2frame,text=i,variable=self.radiovar,value=i,command=self.radiofun)
 			self.radiobutton.grid(column=0,row=i,stick=tk.W)
 
+		# create combo box
+		self.comboxvar = tk.IntVar()
+		self.combox = ttk.Combobox(tab2frame,value=(1,2,3,4,5,10),width=6,textvariable=self.comboxvar,state="readonly")
+		self.combox.grid(column=0,row=5,stick=tk.W)
+		self.combox.current(0)
 
+		# create spin box
+		self.spinvar = tk.IntVar()
+		self.spin = tk.Spinbox(tab2frame,from_=1,to=20,width=5,command=self.spinaction,state="readonly")
+		self.spin.grid(column=0,row=6,stick=tk.W)
+
+		# create show button
+		self.show = ttk.Button(tab2frame,text="Show",command=self.showaction)
+		self.show.grid(column=1,row=6,stick=tk.W)
+
+		# create show info label
+		showlabel = ttk.Label(tab2frame,text="Show Widget current info:")
+		showlabel.grid(column=0,row=7,stick=tk.W)
+
+		# create show info windows scrolltext
+		self.tab2scr = tk.scrolledtext.ScrolledText(tab2frame,width=scrolW,height=scrolH,wrap=tk.WORD)
+		self.tab2scr.grid(column=0,row=8,columnspan=2,stick=tk.EW)
+
+		# file manage
+		filemanage = ttk.Labelframe(tab2,text="File Manage")
+		filemanage.grid(column=0,row=1,stick=tk.W)
+
+		self.browse = ttk.Button(filemanage,text="Browse",command=self.broweraction)
+		self.browse.grid(column=0,row=0,padx=5,pady=5,stick=tk.W)
+
+		self.filelocvar = tk.StringVar()
+		self.fileloc = ttk.Entry(filemanage,width=40)
+		self.fileloc.grid(column=1,row=0,padx=25,pady=5,stick=tk.W)
 
 
 
