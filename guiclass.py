@@ -181,8 +181,8 @@ class GUI():
 		self.filelocvar = tk.StringVar()
 		self.fileloc = ttk.Entry(filemanage,width=40)
 		self.fileloc.grid(column=1,row=0,padx=25,pady=5,stick=tk.W)
-
-
+		self.fileloc.delete(0,tk.END)
+		self.fileloc.insert(0,"<default>")
 
 
 
